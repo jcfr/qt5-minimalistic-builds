@@ -48,5 +48,71 @@ cp "$tools_folder\qtbinpatcher.*" "$prefix_folder\bin\"
 # Fixup OpenSSL DLL paths.
 #gci -r -include "*.prl" $prefix_folder | foreach-object { $a = $_.fullname; ( get-content $a ) | foreach-object { $_ -replace "C:\\\\openssl\\\\lib", '$$$$[QT_INSTALL_LIBS]\\' } | set-content $a }
 
+# Remove uneeded files
+# * Before 770 MB (uncompressed 3028MB)
+# * After 400 MB (uncompressed 1499MB)
+Remove-Item -Recurse -Force $prefix_folder/doc/
+Remove-Item -Recurse -Force $prefix_folder/lib/cmake/Qt5Gui/Qt5Gui_QGifPlugin.cmake
+Remove-Item -Recurse -Force $prefix_folder/lib/cmake/Qt5Gui/Qt5Gui_QICNSPlugin.cmake
+Remove-Item -Recurse -Force $prefix_folder/lib/cmake/Qt5Gui/Qt5Gui_QICOPlugin.cmake
+Remove-Item -Recurse -Force $prefix_folder/lib/cmake/Qt5Gui/Qt5Gui_QJpegPlugin.cmake
+Remove-Item -Recurse -Force $prefix_folder/lib/cmake/Qt5Gui/Qt5Gui_QMinimalIntegrationPlugin.cmake
+Remove-Item -Recurse -Force $prefix_folder/lib/cmake/Qt5Gui/Qt5Gui_QTgaPlugin.cmake
+Remove-Item -Recurse -Force $prefix_folder/lib/cmake/Qt5Gui/Qt5Gui_QTiffPlugin.cmake
+Remove-Item -Recurse -Force $prefix_folder/lib/cmake/Qt5Gui/Qt5Gui_QTuioTouchPlugin.cmake
+Remove-Item -Recurse -Force $prefix_folder/lib/cmake/Qt5Gui/Qt5Gui_QWbmpPlugin.cmake
+Remove-Item -Recurse -Force $prefix_folder/lib/cmake/Qt5Gui/Qt5Gui_QWebpPlugin.cmake
+Remove-Item -Recurse -Force $prefix_folder/lib/cmake/Qt5Gui/Qt5Gui_QWindowsDirect2DIntegrationPlugin.cmake
+Remove-Item -Recurse -Force $prefix_folder/lib/Qt5AccessibilitySupport.lib
+Remove-Item -Recurse -Force $prefix_folder/lib/Qt5AccessibilitySupport.prl
+Remove-Item -Recurse -Force $prefix_folder/lib/Qt5Bootstrap.lib
+Remove-Item -Recurse -Force $prefix_folder/lib/Qt5Bootstrap.prl
+Remove-Item -Recurse -Force $prefix_folder/lib/Qt5Concurrent.lib
+Remove-Item -Recurse -Force $prefix_folder/lib/Qt5Concurrent.prl
+Remove-Item -Recurse -Force $prefix_folder/lib/Qt5Designer.lib
+Remove-Item -Recurse -Force $prefix_folder/lib/Qt5Designer.prl
+Remove-Item -Recurse -Force $prefix_folder/lib/Qt5DesignerComponents.lib
+Remove-Item -Recurse -Force $prefix_folder/lib/Qt5DesignerComponents.prl
+Remove-Item -Recurse -Force $prefix_folder/lib/Qt5DeviceDiscoverySupport.lib
+Remove-Item -Recurse -Force $prefix_folder/lib/Qt5DeviceDiscoverySupport.prl
+Remove-Item -Recurse -Force $prefix_folder/lib/Qt5EdidSupport.lib
+Remove-Item -Recurse -Force $prefix_folder/lib/Qt5EdidSupport.prl
+Remove-Item -Recurse -Force $prefix_folder/lib/Qt5FbSupport.lib
+Remove-Item -Recurse -Force $prefix_folder/lib/Qt5FbSupport.prl
+Remove-Item -Recurse -Force $prefix_folder/lib/Qt5Help.lib
+Remove-Item -Recurse -Force $prefix_folder/lib/Qt5Help.prl
+Remove-Item -Recurse -Force $prefix_folder/lib/Qt5Network.lib
+Remove-Item -Recurse -Force $prefix_folder/lib/Qt5Network.prl
+Remove-Item -Recurse -Force $prefix_folder/lib/Qt5OpenGL.lib
+Remove-Item -Recurse -Force $prefix_folder/lib/Qt5OpenGL.prl
+Remove-Item -Recurse -Force $prefix_folder/lib/Qt5OpenGLExtensions.lib
+Remove-Item -Recurse -Force $prefix_folder/lib/Qt5OpenGLExtensions.prl
+Remove-Item -Recurse -Force $prefix_folder/lib/Qt5PlatformCompositorSupport.lib
+Remove-Item -Recurse -Force $prefix_folder/lib/Qt5PlatformCompositorSupport.prl
+Remove-Item -Recurse -Force $prefix_folder/lib/Qt5Sql.lib
+Remove-Item -Recurse -Force $prefix_folder/lib/Qt5Sql.prl
+Remove-Item -Recurse -Force $prefix_folder/lib/Qt5Svg.lib
+Remove-Item -Recurse -Force $prefix_folder/lib/Qt5Svg.prl
+Remove-Item -Recurse -Force $prefix_folder/lib/Qt5UiTools.lib
+Remove-Item -Recurse -Force $prefix_folder/lib/Qt5UiTools.prl
+Remove-Item -Recurse -Force $prefix_folder/lib/Qt5WinExtras.lib
+Remove-Item -Recurse -Force $prefix_folder/lib/Qt5WinExtras.prl
+Remove-Item -Recurse -Force $prefix_folder/lib/Qt5Xml.lib
+Remove-Item -Recurse -Force $prefix_folder/lib/Qt5Xml.prl
+Remove-Item -Recurse -Force $prefix_folder/lib/Qt5XmlPatterns.lib
+Remove-Item -Recurse -Force $prefix_folder/lib/Qt5XmlPatterns.prl
+Remove-Item -Recurse -Force $prefix_folder/phrasebooks/
+Remove-Item -Recurse -Force $prefix_folder/plugins/bearer/
+Remove-Item -Recurse -Force $prefix_folder/plugins/generic/
+Remove-Item -Recurse -Force $prefix_folder/plugins/iconengines/
+Remove-Item -Recurse -Force $prefix_folder/plugins/imageformats/
+Remove-Item -Recurse -Force $prefix_folder/plugins/platforms/qdirect2d.lib
+Remove-Item -Recurse -Force $prefix_folder/plugins/platforms/qdirect2d.prl
+Remove-Item -Recurse -Force $prefix_folder/plugins/platforms/qminimal.lib
+Remove-Item -Recurse -Force $prefix_folder/plugins/platforms/qminimal.prl
+Remove-Item -Recurse -Force $prefix_folder/plugins/printsupport/
+Remove-Item -Recurse -Force $prefix_folder/plugins/sqldrivers/
+Remove-Item -Recurse -Force $prefix_folder/translations/
+
 # Create final archive.
-& "$tools_folder\7za.exe" a -t7z "$prefix_base_folder.7z" "$prefix_folder" -mmt -mx9
+& "$tools_folder\7za.exe" a -r "$prefix_base_folder.zip" -w "$prefix_folder" -mem=AES256
